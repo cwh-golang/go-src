@@ -37,7 +37,6 @@ func main() {
 	}
 	//defer resp.Close
 	io.Copy(os.Stdout, resp.Body)
-	http.Client
 	fmt.Println()
 	fmt.Println("我是一个粉刷匠，粉刷本领强！")
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"go-src/functional/fib"
 	"os"
@@ -16,10 +17,10 @@ func tryDefer() {
 	fmt.Println(4)
 }
 
-func tryDeferMany()  {
-	for i:=0;i<100 ;i++  {
+func tryDeferMany() {
+	for i := 0; i < 100; i++ {
 		defer fmt.Println(i)
-		if i==30 {
+		if i == 30 {
 			panic("too many nums")
 		}
 	}
@@ -40,14 +41,20 @@ func WriteFile(filename string) {
 	}
 }
 
-func WriteFileToError(filename string)  {
+func WriteFileToError(filename string) {
 	file, err := os.OpenFile(filename, os.O_EXCL|os.O_CREATE, 0666)
+	err=errors.New("this is a custom error")
 	if err != nil {
-		//panic(err)
-		//fmt.Println("file exits")
-		fmt.Println("Error: ",err.Error())
+		if pathError, ok := err.(*os.PathError);
+			!ok {
+			panic(err)
+		} else {
+			fmt.Println(pathError.Op,
+				pathError.Path,
+				pathError.Err)
+		}
 		return
-	}else {
+	} else {
 		fmt.Println("open file seccessful ")
 	}
 	defer file.Close()
