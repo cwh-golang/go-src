@@ -58,7 +58,7 @@ func SubStrTest() {
 
 func getImageList(url string, c chan int) {
 	fmt.Println("get page link url==>", url)
-	body := getUrl(url)
+	body := GetUrl(url)
 	if body == "" {
 		fmt.Println("body empty:", url)
 		return
@@ -84,7 +84,7 @@ func getImageListTest() {
 func getImageLink(links []string, c chan int) {
 	for _, uri := range links {
 		fmt.Println("Get images url, page link==>", uri)
-		body := getUrl(uri)
+		body := GetUrl(uri)
 		if "" == body {
 			fmt.Println("empty body :", uri)
 			return
@@ -162,7 +162,7 @@ func downloadImage(images []string) {
 			}
 		}
 
-		// body:=getUrl(v)
+		// body:=GetUrl(v)
 		if nil != ok || "" == body {
 			fmt.Println("content is empty")
 			continue
@@ -202,7 +202,7 @@ func downloadImageTest() {
 	fmt.Println()
 }
 
-func getUrl(url string) string {
+func GetUrl(url string) string {
 	resp, ok := http.Get(url)
 	if nil != ok {
 		return ""
